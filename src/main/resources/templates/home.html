@@ -18,8 +18,15 @@
             prevent getting buggered by the Belgian taxes.</p>
         <!-- TODO: complete form -->
         <form class="form-inline my-2 my-lg-0" action="/" method="get">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="searchTag"/>
-
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="searchTag" value=""/>
+            <select name="filter">
+                <option selected="selected" value="">
+                </option>
+                <option th:each="category : ${T(com.matthiasvdd.opdracht.models.CategoryEnum).values()}"
+                        th:value="${category.getCode()}"
+                        th:text="${category.name()}">
+                </option>
+            </select>
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search our store</button>
         </form>
     </header>

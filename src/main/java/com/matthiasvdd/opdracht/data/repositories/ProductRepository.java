@@ -9,6 +9,7 @@ import java.util.List;
 public interface ProductRepository extends CrudRepository<Product, Integer> {
     List<Product> findByNameContainingIgnoreCase(String name);
     List<Product> findByCategory(CategoryEnum category);
+    List<Product> findByNameContainingIgnoreCaseAndCategory(String name, CategoryEnum categoryEnum);
     List<Product> findAll();
 
 }
