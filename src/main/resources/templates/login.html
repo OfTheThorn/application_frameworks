@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/head :: name('Home')">
+<head th:replace="fragments/head :: name('Login')">
 </head>
 
 <body>
@@ -13,36 +11,53 @@
 <!-- Page Content -->
 <div class="container">
 
-    <!-- Jumbotron Header -->
-    <header class="jumbotron my-4">
-        <h1 class="display-3">Welcome!</h1>
-        <p class="lead">I am not a raging alcoholic, but more of an alcohol aficionado. Buy your alcohol here and prevent getting buggered by the Belgian taxes.</p>
-        <!-- TODO: complete form -->
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search our store</button>
-        </form>
-    </header>
-
-    <!-- Page Features -->
-    <div class="row text-center">
-
-        <div class="col-lg-3 col-md-6 mb-4">
-            <div class="card h-100">
-                <img class="card-img-top" src="http://placehold.it/500x325" alt="">
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h1>Login page</h1>
+            <form th:action="@{/login}" method="post">
+                <div th:if="${param.error}">
+                    <div class="alert alert-danger">
+                        Invalid username or password.
+                    </div>
                 </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-primary">Find Out More!</a>
+                <div th:if="${param.logout}">
+                    <div class="alert alert-info">
+                        You have been logged out.
+                    </div>
                 </div>
-            </div>
+                <div class="form-group">
+                    <label for="username">Username</label>:
+                    <input type="text"
+                           id="username"
+                           name="username"
+                           class="form-control"
+                           autofocus="autofocus"
+                           placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>:
+                    <input type="password"
+                           id="password"
+                           name="password"
+                           class="form-control"
+                           placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <input type="submit"
+                                   name="login-submit"
+                                   id="login-submit"
+                                   class="form-control btn btn-info"
+                                   value="Log In">
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-    <!-- /.row -->
 
+    <p><a href="/" th:href="@{/}">Back to home page</a></p>
 </div>
 <!-- /.container -->
 

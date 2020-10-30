@@ -17,10 +17,10 @@ public class Product {
     private int id;
 
     @NotNull(message = "Name cannot be empty.")
-    @Size(min = 3, max = 20, message = "Name should be between 3 and 20 characters")
+    @Size(min = 3, max = 50, message = "Name should be between 3 and 50 characters")
     private String name;
     @NotNull(message = "Brand cannot be empty.")
-    @Size(min = 3, max = 20, message = "Brand should be between 3 and 20 characters")
+    @Size(min = 3, max = 30, message = "Brand should be between 3 and 30 characters")
     private String brand;
 
     private CategoryEnum category;
@@ -32,7 +32,10 @@ public class Product {
     @DecimalMin(value = "0", message = "Value needs to be bigger than 0")
     private double price;
 
-    public Product() {}
+    private String imgLocation;
+
+    public Product() {
+    }
 
     public int getId() {
         return id;
@@ -61,4 +64,7 @@ public class Product {
     public double getPrice() {
         return price;
     }
+
+    public String getImgLocation() { return imgLocation; }
+
 }
