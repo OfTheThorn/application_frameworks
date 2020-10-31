@@ -18,7 +18,8 @@
             prevent getting buggered by the Belgian taxes.</p>
         <!-- TODO: complete form -->
         <form class="form-inline my-2 my-lg-0" action="/" method="get">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="searchTag" value=""/>
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="searchTag"
+                   value=""/>
             <select name="filter">
                 <option selected="selected" value="">
                 </option>
@@ -37,16 +38,17 @@
         <div class="col-lg-3 col-md-6 mb-4" th:each="product: ${products}">
 
             <div class="card h-100">
-                <img class="card-img-top mx-auto" th:src="@{${product.imgLocation}}" alt="No image" style="max-width: 100px; max-height: 225px;">
+                <img class="card-img-top mx-auto" th:src="@{${product.imgLocation}}" alt="No image"
+                     style="max-width: 100px; max-height: 225px;">
                 <div class="card-body">
                     <h4 class="card-title" th:text="${product.name}">Name</h4>
                     <p class="card-text" th:text="${product.description}">Description</p>
                 </div>
                 <div class="card-footer">
-                    <a href="#" class="btn btn-primary">More info</a>
-                    <button type="button" class="btn btn-default btn-lg">
-                        <i class="fas fa-shopping-cart"></i>
-                    </button>
+                    <a th:href="@{/detail/{id}(id = ${product.id})}" class="btn btn-primary">More info</a>
+                        <button type="button" class="btn btn-default btn-lg">
+                            <i class="fas fa-shopping-cart"></i>
+                        </button>
                 </div>
             </div>
         </div>

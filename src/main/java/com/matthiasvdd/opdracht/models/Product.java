@@ -25,7 +25,7 @@ public class Product {
 
     private CategoryEnum category;
 
-
+    @Size(min = 0, max = 1000, message = "Description should be between 0 and 1000 characters")
     private String description;
     @Min(value = 0, message = "Value needs to be minimum 0")
     private int amountAvailable;

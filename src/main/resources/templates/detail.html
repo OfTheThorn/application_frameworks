@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: name('Detail')">
+</head>
+
+<body>
+<!-- Navigation -->
+<nav th:replace="fragments/navigation"></nav>
+
+<!-- Page Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-9">
+
+            <div class="card mt-4">
+                <img class="card-img-top img-fluid mx-auto" th:src="@{${product.imgLocation}}" alt="No image"
+                     style="max-width: 20%; max-height: 35%; margin-top: 5%">
+                <div class="card-body">
+                    <h3 class="card-title" th:text="${product.name}">Title</h3>
+                    <h4 th:text="'€'+ ${product.price}">Price</h4>
+                    <p class="card-text" th:text="${product.description}">Description</p>
+                </div>
+            </div>
+            <!-- /.card -->
+
+            <div class="card card-outline-secondary my-4">
+                <div class="card-header text-danger" th:text="#{detail.availability} +': '+ ${product.amountAvailable}"
+                     th:if="${product.amountAvailable == 0}"></div>
+                <div class="card-header text-success" th:text="#{detail.availability} +': '+ ${product.amountAvailable}"
+                     th:if="${product.amountAvailable > 0}"></div>
+                <div class="card-body">
+                    <div class="card-text" th:text="#{detail.supply}" th:if="${product.amountAvailable == 0}">
+                        Card text
+                    </div>
+                    <a href="#" class="btn btn-secondary" th:text="#{detail.supplyButton}"
+                       th:if="${product.amountAvailable == 0}">Add</a>
+                    <a href="#" class="btn btn-success" th:text="#{detail.shoppingCart}"
+                       th:if="${product.amountAvailable != 0}">Add</a>
+                </div>
+            </div>
+            <!-- /.card -->
+
+        </div>
+        <!-- /.col-lg-9 -->
+
+    </div>
+</div>
+<!-- /.container -->
+
+<div th:replace="fragments/scripts"></div>
+</body>
+</html>

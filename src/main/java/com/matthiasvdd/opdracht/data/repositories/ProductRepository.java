@@ -11,5 +11,6 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
     List<Product> findByCategory(CategoryEnum category);
     List<Product> findByNameContainingIgnoreCaseAndCategory(String name, CategoryEnum categoryEnum);
     List<Product> findAll();
+    Product findById(int id);
 
 }
