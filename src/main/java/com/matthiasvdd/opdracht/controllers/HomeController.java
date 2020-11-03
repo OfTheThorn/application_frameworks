@@ -22,22 +22,29 @@ public class HomeController {
     @GetMapping(value = "/")
     public ModelAndView showIndex(@RequestParam(value = "searchTag", required = false) String searchTag, @RequestParam(value = "filter", required = false) String filter) {
         ArrayList<Product> prodList;
-        if(searchTag == null && filter == null)
+        if (isEmptyString(searchTag))
+            searchTag = null;
+        if (isEmptyString(filter))
+            filter = null;
+        if (searchTag == null && filter == null)
             prodList = new ArrayList<>(repo.findAll());
-        else if(searchTag != null && filter == null)
+        else if (searchTag != null && filter == null)
             prodList = new ArrayList<>(repo.findByNameContainingIgnoreCase(searchTag));
-        else if(searchTag == null){
+        else if (searchTag == null) {
             CategoryConverter categoryConverter = new CategoryConverter();
             CategoryEnum categoryEnum = categoryConverter.convertToEntityAttribute(filter);
             prodList = new ArrayList<>(repo.findByCategory(categoryEnum));
-        }
-        else {
+        } else {
             CategoryConverter categoryConverter = new CategoryConverter();
             CategoryEnum categoryEnum = categoryConverter.convertToEntityAttribute(filter);
             prodList = new ArrayList<>(repo.findByNameContainingIgnoreCaseAndCategory(searchTag, categoryEnum));
         }
         ModelAndView mav = new ModelAndView("home");
-        mav.addObject("products",prodList);
+        mav.addObject("products", prodList);
         return mav;
+    }
+
+    boolean isEmptyString(String string) {
+        return string == null || string.isBlank();
     }
 }

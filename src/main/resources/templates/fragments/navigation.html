@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <body>
 <nav th:fragment="navigation" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="#">Matthias' Alcohol Imperium</a>
+        <a class="navbar-brand" th:href="@{~/}">Matthias' Alcohol Imperium</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link btn btn-outline-info" href="#">Login</a>
+                <li class="nav-item" sec:authorize="isAnonymous()">
+                    <a class="nav-link btn btn-outline-info" th:href="@{~/login}">Login</a>
+                </li>
+                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                    <a sec:authentication="principal.username" id="navbarDropdown" class="nav-link btn btn-outline-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Useremail</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <form method="post" th:action="@{/logout}">
+                            <input type="submit" class="dropdown-item" th:value="#{user.logout}"/>
+                        </form>
+                    </div>
                 </li>
             </ul>
         </div>

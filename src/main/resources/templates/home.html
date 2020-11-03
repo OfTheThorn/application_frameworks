@@ -16,12 +16,11 @@
         <h1 class="display-3">Welcome!</h1>
         <p class="lead">I am not a raging alcoholic, but more of an alcohol aficionado. Buy your alcohol here and
             prevent getting buggered by the Belgian taxes.</p>
-        <!-- TODO: complete form -->
         <form class="form-inline my-2 my-lg-0" action="/" method="get">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="searchTag"
-                   value=""/>
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="searchTag" value=""
+            />
             <select name="filter">
-                <option selected="selected" value="">
+                <option selected="selected" value=" ">
                 </option>
                 <option th:each="category : ${T(com.matthiasvdd.opdracht.models.CategoryEnum).values()}"
                         th:value="${category.getCode()}"
@@ -42,12 +41,12 @@
                      style="max-width: 100px; max-height: 225px;">
                 <div class="card-body">
                     <h4 class="card-title" th:text="${product.name}">Name</h4>
-                    <p class="card-text" th:text="${product.description}">Description</p>
+                    <p class="card-text" th:text="#{detail.availability}+ ': ' + ${product.amountAvailable}">Availability</p>
                 </div>
                 <div class="card-footer">
                     <a th:href="@{/detail/{id}(id = ${product.id})}" class="btn btn-primary">More info</a>
                         <button type="button" class="btn btn-default btn-lg">
-                            <i class="fas fa-shopping-cart"></i>
+                            <i th:if="${product.amountAvailable != 0}" class="fas fa-shopping-cart"></i>
                         </button>
                 </div>
             </div>
