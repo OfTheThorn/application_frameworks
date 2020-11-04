@@ -9,6 +9,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.Collection;
+import java.util.Set;
 
 
 @Entity
@@ -22,11 +23,24 @@ public class User implements UserDetails {
 
     private boolean enabled;
 
-    public User(){
+    public User() {
         this.accountNonExpired = true;
         this.accountNonLocked = true;
         this.credentialsNonExpired = true;
         this.enabled = true;
+    }
+
+
+
+    @OneToMany(mappedBy = "user")
+    private Set<Order> orders;
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 
     @Id
@@ -68,6 +82,13 @@ public class User implements UserDetails {
     @Transient
     private String confirmPassword;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;

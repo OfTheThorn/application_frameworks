@@ -3,6 +3,7 @@ package com.matthiasvdd.opdracht.validation;
 import com.matthiasvdd.opdracht.data.repositories.UserRepository;
 import com.matthiasvdd.opdracht.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +19,7 @@ public class UserService {
 
     @Transactional
     public User registerUser(User u) throws Exception {
-        System.out.println("Register user");
-        if(emailExists(u.getEmail()))
+        if (emailExists(u.getEmail()))
             throw new Exception("There is an account with email address: "
                     + u.getEmail());
         String encrypted = bCryptPasswordEncoder.encode(u.getPassword());
@@ -27,6 +27,17 @@ public class UserService {
         u.setPassword(encrypted);
         return userRepository.save(u);
     }
+
+    @Transactional
+    public User editUser(User u, int id) {
+        String encrypted = bCryptPasswordEncoder.encode(u.getPassword());
+        System.out.println(encrypted);
+        u.setConfirmPassword(encrypted);
+        u.setPassword(encrypted);
+        u.setId(id);
+        return userRepository.save(u);
+    }
+
     private boolean emailExists(String email) {
         return userRepository.findByEmail(email) != null;
     }

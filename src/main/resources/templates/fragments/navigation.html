@@ -19,6 +19,8 @@
                         <form method="post" th:action="@{/logout}">
                             <input type="submit" class="dropdown-item" th:value="#{user.logout}"/>
                         </form>
+                        <a class="dropdown-item" href="/profile" th:text="#{user.profile}">Profile</a>
+                        <a class="dropdown-item" href="/shopping-cart" th:text="#{shoppingCart}">Shoppingcart</a>
                     </div>
                 </li>
             </ul>

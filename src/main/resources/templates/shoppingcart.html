@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: name('Home')">
+</head>
+
+<body>
+<!-- Navigation -->
+<nav th:replace="fragments/navigation"></nav>
+
+<!-- Page Content -->
+<div class="container">
+    <div class="row" style="margin-top: 10%;">
+        <div class="col-9">
+
+            <div class="alert alert-success" role="alert" th:text="${success}" th:if="${success}"></div>
+            <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+            <div class="alert alert-danger" role="alert" th:text="${err}" th:if="${errors}" th:each="err: ${errors}"></div>
+
+
+            <div class="list-group" th:each="orderProduct: ${orderProducts}">
+                <li class="list-group-item flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1" th:text="${orderProduct.getProduct().getName()}">product name</h5>
+                    </div>
+                    <form th:method="post" th:action="@{/shopping-cart/edit/}">
+                        <input type="hidden" th:value="${orderProduct.getProduct().getId()}" name="productId"/>
+                        <label for="bottleAmount" th:value="#{order.quantity}"></label>
+                        <input id="bottleAmount" type="number" class="mb-1" th:value="${orderProduct.getAmount()}"
+                               name="qty"/>
+                        <input type="submit" class="btn btn-outline-primary" th:value="#{update}"/>
+                    </form>
+                    <form th:method="post" th:action="@{/shopping-cart/delete/}">
+                        <input type="hidden" th:value="${orderProduct.getProduct().getId()}" name="productId"/>
+                        <input type="submit" class="btn btn-outline-danger" th:value="#{remove}"/>
+                    </form>
+                </li>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total cost</h5>
+
+                    <p class="card-text" th:each="orderProduct: ${orderProducts}">
+                        <span th:text="${orderProduct.getProduct().getName()}"></span>
+                        <br/>
+                        <small th:text="${orderProduct.amount} + 'x €' + ${orderProduct.product.price} + '= ' + ${orderProduct.getTotalPrice()}"></small>
+                    </p>
+                    <hr/>
+                    <p class="card-text" th:text="#{total} + ': €' + ${total}"></p>
+                    <form th:action="@{/shopping-cart/confirm}" th:method="post">
+                        <input th:if="${!orderProducts.isEmpty()}" type="submit" class="btn btn-primary"
+                               th:value="#{order}"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.container -->
+
+<div th:replace="fragments/scripts"></div>
+</body>
+</html>

@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OrderRepository extends CrudRepository<Order, Integer> {
+    Order findByUserIdAndInShoppingCart(int id, boolean inCart);
 
 }

@@ -5,7 +5,9 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 // Products will be different types of alcohol
 @Entity
@@ -32,8 +34,16 @@ public class Product {
 
     private String imgLocation;
 
-    @ManyToMany(mappedBy = "products")
-    private List<Order> orders;
+    @OneToMany(mappedBy = "product")
+    Set<OrderProduct> orderProducts = new HashSet<>();
+
+    public Set<OrderProduct> getOrderProducts() {
+        return orderProducts;
+    }
+
+    public void setOrderProducts(Set<OrderProduct> orderProducts) {
+        this.orderProducts = orderProducts;
+    }
 
     public Product() {
     }
@@ -68,4 +78,7 @@ public class Product {
 
     public String getImgLocation() { return imgLocation; }
 
+    public void setAmountAvailable(int amountAvailable) {
+        this.amountAvailable = amountAvailable;
+    }
 }
