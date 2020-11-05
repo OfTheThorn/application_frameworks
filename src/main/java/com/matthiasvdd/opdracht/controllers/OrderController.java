@@ -4,11 +4,13 @@ import com.matthiasvdd.opdracht.data.repositories.ProductRepository;
 import com.matthiasvdd.opdracht.data.services.OrderService;
 import com.matthiasvdd.opdracht.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -46,6 +48,8 @@ public class OrderController {
     @GetMapping(value = "/shopping-cart/add/{id}")
     public String addToCart(@PathVariable("id") int drinkId, RedirectAttributes redirectAttributes) {
         Product p = productRepository.findById(drinkId);
+        if(p == null)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         orderService.addProductToOrder(p);
         redirectAttributes.addFlashAttribute("success", "Product has been added to cart");
         return "redirect:/shopping-cart";
@@ -54,6 +58,8 @@ public class OrderController {
     @RequestMapping(value = "/shopping-cart/edit/", method = RequestMethod.POST)
     public String editQuantity(@RequestParam(name = "qty") int qty, @RequestParam(name = "productId") int productId, RedirectAttributes redirectAttributes) {
         Product p = productRepository.findById(productId);
+        if(p == null)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         if (p.getAmountAvailable() < qty) {
             redirectAttributes.addFlashAttribute("error", "Insufficient bottles available");
             return "redirect:/shopping-cart";
@@ -67,6 +73,8 @@ public class OrderController {
     @RequestMapping(value = "/shopping-cart/delete/", method = RequestMethod.POST)
     public String removeProduct(@RequestParam(name = "productId") int productId, RedirectAttributes redirectAttributes) {
         Product p = productRepository.findById(productId);
+        if(p == null)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         orderService.removeProduct(p);
         return "redirect:/shopping-cart";
     }
