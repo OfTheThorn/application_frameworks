@@ -64,7 +64,11 @@
                         <div class="col-sm-6 form-group">
                             <label th:text="#{form.user.password}">Password</label>
                             <input type="password" th:placeholder="#{form.user.password.placeholder}" class="form-control" th:field="*{password}">
-                            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" th:class="error"></span>
+                            <ul class="text-danger" th:each="error: ${#fields.errors('password')}">
+                                <li th:each="message : ${error.split(',')}">
+                                    <p class="error-message" th:text="${message}"></p>
+                                </li>
+                            </ul>
                         </div>
                         <div class="col-sm-6 form-group">
                             <label th:text="#{form.user.confirmPassword}">Confirm password</label>

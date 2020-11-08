@@ -8,7 +8,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = PasswordMatchesValidator.class)
 @Documented
-public @interface PasswordValidator {
+public @interface ValidPassword {
     String message() default "{validation.password}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};

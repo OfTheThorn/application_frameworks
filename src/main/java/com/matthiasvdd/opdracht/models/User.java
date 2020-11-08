@@ -1,6 +1,6 @@
 package com.matthiasvdd.opdracht.models;
 
-import com.matthiasvdd.opdracht.validation.PasswordValidator;
+import com.matthiasvdd.opdracht.validation.ValidPassword;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,7 +13,7 @@ import java.util.Set;
 
 
 @Entity
-@PasswordValidator
+@ValidPassword
 public class User implements UserDetails {
     private boolean accountNonExpired;
 
