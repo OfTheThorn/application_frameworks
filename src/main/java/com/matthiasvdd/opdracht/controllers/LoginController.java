@@ -3,8 +3,10 @@ package com.matthiasvdd.opdracht.controllers;
 import com.matthiasvdd.opdracht.models.User;
 import com.matthiasvdd.opdracht.validation.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -57,16 +59,20 @@ public class LoginController {
         return "profile";
     }
 
-    @RequestMapping(value = "/profile/edit/{id}", method = RequestMethod.PUT)
-    @ResponseBody
+    @RequestMapping(value = "/profile/edit/{id}", method = RequestMethod.POST)
     public ModelAndView editProfile(@PathVariable("id") int id, @Valid User user, BindingResult bindingResult){
-        ModelAndView mav = new ModelAndView("/");
+        ModelAndView mav = new ModelAndView("/profile");
+
         if (bindingResult.hasErrors()) {
             mav.addObject("errors", bindingResult.getAllErrors());
             return mav;
         }
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
         User edited = userService.editUser(user, id);
-        mav.addObject("success", edited);
+        mav.addObject("success", true);
         return mav;
     }
 }
